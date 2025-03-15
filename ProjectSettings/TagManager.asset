@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - ExperiencePoints
+  - FrameObject
+  - textInputField
+  - ExitButton
+  - InputField
+  - LogInButton
+  - PlayerName
   layers:
   - Default
   - TransparentFX

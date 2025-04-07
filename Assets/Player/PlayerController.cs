@@ -1,120 +1,56 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-
     [Header("Shooting Settings")]
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-    public float bulletSpeed = 10f;
-    public float bulletLifetime = 2f;
-    public float eyeOffset = 0.5f; // Distancia del "eye" al centro del jugador
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float bulletSpeed = 10f;
 
-    private Rigidbody2D rb;
-    private Vector2 movement;
-    private Transform eye;
+    private PlayerMovement movement;
 
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-
-        // Buscar el objeto "eye"
-        eye = transform.Find("eye");
-        if (eye == null)
-        {
-            Debug.LogError("No se encontr� el objeto 'eye' como hijo del jugador");
-        }
-
-        // Si no hay firePoint asignado, usar el eye como firePoint
-        if (firePoint == null && eye != null)
-        {
-            firePoint = eye;
-            Debug.LogWarning("FirePoint no asignado, usando el objeto 'eye' como punto de disparo");
-        }
-        else if (firePoint == null)
-        {
-            firePoint = transform;
-            Debug.LogWarning("FirePoint no asignado, usando posici�n del jugador");
-        }
+        movement = GetComponent<PlayerMovement>();
     }
 
-    void Update()
+    private void Update()
     {
-        // Capturar entrada de movimiento
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        movement = movement.normalized;
+        HandleMovementInput();
+        HandleShootingInput();
+    }
 
-        // Actualizar posicion y rotacion del "eye"
-        if (movement != Vector2.zero)
-        {
-            UpdateEyePositionAndRotation(movement);
-        }
+    private void HandleMovementInput()
+    {
+        Vector2 input = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+        ).normalized;
 
-        // Disparar
+        movement.SetMovement(input);
+    }
+
+    private void HandleShootingInput()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
         }
     }
 
-    void FixedUpdate()
+    private void Shoot()
     {
-        if (movement != Vector2.zero)
+        if (bulletPrefab == null || firePoint == null) return;
+
+        // Obtener la dirección del eye (siempre válida, incluso sin movimiento)
+        Vector2 shootDirection = movement.GetEyeDirection();
+
+        // Crear bala y asignar velocidad
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        if (bullet.TryGetComponent<Rigidbody2D>(out var rb))
         {
-            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        }
-    }
-
-    void UpdateEyePositionAndRotation(Vector2 direction)
-    {
-        if (eye != null)
-        {
-            // Calcular la nueva posicion del "eye" (ligeramente adelantado en la direccion del movimiento)
-            Vector2 newPosition = (Vector2)transform.position + direction * eyeOffset;
-            eye.position = newPosition;
-
-            // Calcular rotacion
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            // Aplicar rotacion tanto al "eye" como al firePoint
-            eye.rotation = rotation;
-
-            // Si el firePoint no es el mismo objeto que el eye, actualizarlo tambien
-            if (firePoint != eye)
-            {
-                firePoint.position = newPosition;
-                firePoint.rotation = rotation;
-            }
-        }
-    }
-
-    void Shoot()
-    {
-        if (bulletPrefab == null)
-        {
-            Debug.LogError("Prefab de bala no asignado");
-            return;
-        }
-
-        // Instanciar bala en la posicion y rotacion del firePoint
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = firePoint.right * bulletSpeed;
-            Destroy(bullet, bulletLifetime);
-        }
-        else
-        {
-            Debug.LogError("El prefab de la bala no tiene Rigidbody2D");
-            Destroy(bullet);
+            rb.linearVelocity = shootDirection * bulletSpeed;
         }
     }
 }

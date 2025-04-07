@@ -211,7 +211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Dewar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1799,10 +1799,12 @@ GameObject:
   - component: {fileID: 970193493}
   - component: {fileID: 970193496}
   - component: {fileID: 970193497}
-  - component: {fileID: 970193498}
-  - component: {fileID: 970193501}
-  - component: {fileID: 970193502}
   - component: {fileID: 970193503}
+  - component: {fileID: 970193502}
+  - component: {fileID: 970193501}
+  - component: {fileID: 970193500}
+  - component: {fileID: 970193499}
+  - component: {fileID: 970193498}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1968,7 +1970,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 970193492}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105893ed67989194a94c963c13d327a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxExperience: 300
+--- !u!114 &970193499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970193492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b84500607bd637b40b6294ff87de76b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &970193500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970193492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab6619beeb9d0841b70838972d00c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &970193501
@@ -1980,24 +2007,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 970193492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 105893ed67989194a94c963c13d327a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 23137c2e34bd094408c352964d7b3df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experiencePoints: 0
-  maxExperience: 300
+  experienceText: {fileID: 972205929}
+  nameText: {fileID: 255916098}
 --- !u!114 &970193502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970193492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615364be3338b1344a2d96e5e489e804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &970193503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2009,11 +2024,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c409595ab4ab97459354ec681b3d5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   bulletPrefab: {fileID: 3781512233996237674, guid: 155efb32cb14f114481aa1bd88dc5627, type: 3}
   firePoint: {fileID: 57225035}
   bulletSpeed: 10
-  bulletLifetime: 2
+--- !u!114 &970193503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970193492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9096bf51b4755374bb4defc09b30c7a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  eye: {fileID: 1164872419}
   eyeOffset: 0.5
 --- !u!1 &972205927
 GameObject:

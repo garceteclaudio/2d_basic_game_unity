@@ -16,10 +16,10 @@ public class PlayerClick : MonoBehaviour
             // Verificar si el rayo golpea al enemigo
             if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
-               
+
                 // Obtener el componente EnemyHealth del enemigo
                 EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-                Debug.Log("Se hizo click sobre el enemigo !!!! Cantidad de vidas: "+ enemyHealth.GetCurrentHealth());
+                Debug.Log("Se hizo click sobre el enemigo !!!! Cantidad de vidas: " + enemyHealth.GetCurrentHealth());
                 // Si el enemigo tiene el componente, aplicar daño
                 if (enemyHealth != null)
                 {

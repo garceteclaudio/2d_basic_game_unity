@@ -13,6 +13,7 @@ TagManager:
   - InputField
   - LogInButton
   - PlayerName
+  - eye
   layers:
   - Default
   - TransparentFX
